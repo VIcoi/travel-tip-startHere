@@ -30,7 +30,36 @@ document.body.onload = () => {
 // }
 
 
-document.querySelector('.btn').addEventListener('click', (ev)=>{
+
+document.querySelector('.go').addEventListener('click', (ev) => {
+    const address = document.querySelector('.address').value;
+    // if (places.length == 0) {
+    //     return;
+    // }
+    // var bounds = new google.maps.LatLngBounds();
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            const loc = results[0].geometry.location;
+            const lat = loc.lat();
+            const lng = loc.lng();
+            mapService.panTo(lat, lng);
+            mapService.addMarker(loc);
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+})
+
+document.querySelector('.meBtn').addEventListener('click', (ev) => {
     console.log('Aha!', ev.target);
-    mapService.panTo( 35.6895,  139.6917);
+    locService.getPosition()
+        .then(pos => {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            mapService.panTo(lat, lng);
+        })
+        .catch(err => {
+            console.log('err!!!', err);
+        })
 })

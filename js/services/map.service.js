@@ -8,8 +8,9 @@ export default {
 
 var map;
 
-function initMap(lat = 32.0749831, lng = 34.9120554) {
+function initMap(lat = 31.9893978, lng = 34.7715917) {
     console.log('InitMap'); 
+    
     return _connectGoogleApi()
     .then(() => {
         console.log('google available');
@@ -37,7 +38,7 @@ function panTo(lat, lng) {
 }
 
 function _connectGoogleApi() {
-    if (window.google) return Promise.resolve()
+    if (window.google) return Promise.resolve();
     const API_KEY = 'AIzaSyBYkjozA7Homec78H8vBEfsXoZSFkjwBac';
     // const API_KEY = '';
     var elGoogleApi = document.createElement('script');
