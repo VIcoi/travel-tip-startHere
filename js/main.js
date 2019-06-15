@@ -40,11 +40,13 @@ document.querySelector('.go').addEventListener('click', (ev) => {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
+            console.log(results[0]);
+            
             const loc = results[0].geometry.location;
             const lat = loc.lat();
             const lng = loc.lng();
             mapService.panTo(lat, lng);
-            mapService.addMarker(loc);
+            mapService.addMarker(loc, address);
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -57,7 +59,9 @@ document.querySelector('.meBtn').addEventListener('click', (ev) => {
         .then(pos => {
             const lat = pos.coords.latitude;
             const lng = pos.coords.longitude;
+            const loc = { lat, lng }
             mapService.panTo(lat, lng);
+            mapService.addMarker(loc, 'Here i am');
         })
         .catch(err => {
             console.log('err!!!', err);
